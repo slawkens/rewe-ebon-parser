@@ -220,7 +220,7 @@ export async function parseEBon(dataBuffer: Buffer): Promise<Receipt> {
                 tax: parseFloat(totalTaxMatch[2].replace(',', '.')),
                 gross: parseFloat(totalTaxMatch[3].replace(',', '.')),
             };
-            
+
             return;
         }
 
@@ -231,7 +231,7 @@ export async function parseEBon(dataBuffer: Buffer): Promise<Receipt> {
         }
 
         const newREWECreditMatch = line.match(/Neues REWE Guthaben: ([0-9,]*) EUR/);
-        
+
         if (newREWECreditMatch) {
             newREWECredit = parseFloat(newREWECreditMatch[1].replace(',', '.'));
         }
