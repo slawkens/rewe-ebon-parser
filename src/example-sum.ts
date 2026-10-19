@@ -1,12 +1,21 @@
 import { readFileSync, readdirSync } from 'fs';
 import { parseEBon } from './index';
+import * as path from 'path';
 
 async function main() {
     let args = process.argv.slice(2);
 
+    if (args.length === 0) {
+        console.error('Please provide a directory path as an argument.');
+        process.exit(1);
+    }
+
     let months: number[] = [];
     //let products = new Map<string, number>();
-    for (const file of readdirSync(args[0])) {
+    let files = readdirSync(args[0]);
+    const pdfFiles = files.filter((file: string) => path.extname(file).toLowerCase() === '.pdf');
+
+    for (const file of pdfFiles) {
         const dataPenny = readFileSync(`${args[0]}/${file}`);
         const receipt = await parseEBon(dataPenny);
         const month = receipt.date.getMonth();
